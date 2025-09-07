@@ -92,6 +92,45 @@ void insertAtPosition(){
 		pre->next=temp;
 	}
 }
+void insert_before(){
+	int x,val;
+	printf("Enter the value before which node has to be inserted: ");
+	scanf("%d",&x);
+	printf("Enter data: ");
+	scanf("%d",&val);
+	newnode=(struct node *)malloc(sizeof(struct node));
+	newnode->data=val;
+	newnode->next=NULL;
+	temp=head;
+	struct node *pre;
+	while(temp->data!=x){
+		pre=temp;
+		temp=temp->next;
+	}
+	pre->next=newnode;
+	pre=newnode;
+	pre->next=temp;
+}
+void insert_after(){
+	int x,val;
+	printf("Enter the value after which node has to be inserted: ");
+	scanf("%d",&x);
+	printf("Enter data: ");
+	scanf("%d",&val);
+	newnode=(struct node *)malloc(sizeof(struct node));
+	newnode->data=val;
+	newnode->next=NULL;
+	temp=head;
+	struct node *pre;
+	pre=temp;
+	while(pre->data!=x){
+		pre=temp;
+		temp=temp->next;
+	}
+	pre->next=newnode;
+	pre=newnode;
+	pre->next=temp;
+}
 void deleteAtFirst(){
 	temp=head;
 	head=head->next;
@@ -132,6 +171,15 @@ void deleteAtLast(){
 			free(temp);
 		}
 }
+void delete_list(){
+	if(head!=NULL){
+		temp=head;
+		while(temp!=NULL){
+			deleteAtFirst();
+			temp=head;
+		}
+	}
+}
 void count(){
 	if(head==NULL){
 		printf("Linked list is empty\n");
@@ -146,10 +194,28 @@ void count(){
 	 printf("Number of nodes is %d\n",c);
 	}
 }
+void sort_list(){
+	struct node *p1,*p2;
+	int temp;
+	p1=head;
+	while(p1->next!=NULL){
+		p2=p1->next;
+		while(p2!=NULL){
+			if(p1->data>p2->data){
+				temp=p1->data;
+				p1->data=p2->data;
+				p2->data=temp;
+			}
+			p2=p2->next;
+		}
+		p1=p1->next;
+	}
+
+}
 int main()
 {
 	int ch;
-	printf("MENU:\n1.create\n2.display\n3.InsertAtFirst\n4.InsertAtLast\n5.count\n6.deleteAtFirst\n7.deleteAtLast\n8.InsertAtPosition\n9.DeleteAtPosition\n");
+	printf("MENU:\n1.Create\n2.Display\n3.Insert At First\n4.Insert At Last\n5.Count number of nodes\n6.Delete At First\n7.Delete At Last\n8.Insert At Position\n9.Delete At Position\n10.Insert before\n11.Insert After\n12.Delete list\n13.Sort list\n");
 	while(1){
 		printf("Enter your choice:");
 		scanf("%d",&ch);
@@ -172,6 +238,14 @@ int main()
             		break;
             case 9: deleteAtPosition();
             		break;
+			case 10: insert_before();
+					break;
+			case 11: insert_after();
+					break;
+			case 12: delete_list();
+					break;
+			case 13: sort_list();
+					break;
 			default: printf("Invalid choice");
 		}
 	}
