@@ -32,6 +32,7 @@ void dequeue(){
         temp=front;
         printf("%d is dequeued from Circular Queue\n",temp->data);
         front=temp->next;
+        rear->next=front;
         free(temp);
     }
 }
