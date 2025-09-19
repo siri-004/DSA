@@ -129,8 +129,9 @@ void delete_list(){
         return;
     }
     while(head!=NULL){   
-        deleteAtLast();
+        deleteAtFirst();
     }
+    printf("Entire List deleted\n");
 }
 void sort_list() {
     struct node *p1, *p2;
@@ -153,11 +154,73 @@ void sort_list() {
         p1 = p1->next;
     } while (p1->next != head);
 }
-
+void insertAtPosition(){
+    int pos,i;
+    printf("Enter the position where node has to be inserted: ");
+    scanf("%d",&pos);
+    newnode=(struct node *)malloc(sizeof(struct node));
+    printf("Enter the data: ");
+    scanf("%d",&newnode->data);
+    if(head==NULL){
+        if(pos==1){
+            head=newnode;
+            newnode->next=head;
+        }
+        else{
+            printf("Invalid position\n");
+            free(newnode);
+        }
+        return;
+    }
+    if(pos==1){
+        insertAtFirst();
+        return;
+    }
+    temp=head;
+    for(i=1;i<pos-1 && temp->next!=head;i++){
+        temp=temp->next;
+    }
+    if(temp->next==head && i<pos-1){
+        printf("Invalid position\n");
+        free(newnode);
+    }
+    else{
+        newnode->next=temp->next;
+        temp->next=newnode;
+    }
+}
+void deleteAtPosition(){
+    int pos,i;
+    printf("Enter the position where node has to be deleted: ");
+    scanf("%d",&pos);
+    if(head==NULL){
+        printf("List empty\n");
+        return;
+    }
+    if(pos==1){
+        deleteAtFirst();
+        return;
+    }
+    temp=head;
+    struct node *curr;
+    for(i=1;i<pos && temp->next!=head;i++){
+        curr=temp;
+        temp=temp->next;
+    }
+    if(temp->next==head && i<pos){
+        printf("Invalid position\n");
+    }
+    else{
+        curr->next=temp->next;
+        free(temp);
+    }
+}
 int main()
 {
 	int ch;
-	printf("MENU:\n1.Create\n2.Display\n3.Insert At First\n4.Insert At Last\n5.Count number of nodes\n6.Delete At First\n7.Delete At Last\n8.Delete list\n9.Sort list\n");
+	printf("MENU:\n1.Create\n2.Display\n3.Insert At First\n4.Insert At Last\n5.Count number of nodes\n");
+    printf("6.Delete At First\n7.Delete At Last\n8.Delete list\n9.Sort list\n");
+    printf("10.Insert At Position\n11.Delete At Position\n");
 	while(1){
 		printf("Enter your choice:");
 		scanf("%d",&ch);
@@ -180,6 +243,10 @@ int main()
 					break;
 			case 9: sort_list();
 					break;
+            case 10: insertAtPosition();
+                    break;
+            case 11: deleteAtPosition();
+                    break;
 			default: printf("Invalid choice");
 		}
 	}
