@@ -62,6 +62,15 @@ int sumOfNodes(struct node *root){
     int rightSum=sumOfNodes(root->right);
     return leftSum+rightSum+root->data;
 }
+int height(struct node *root){
+    if(root==NULL){
+        return 0;
+    }
+    int leftheight=height(root->left);
+    int rightheight=height(root->right);
+    int myheight=(leftheight>rightheight) ? leftheight: rightheight;
+    return myheight+1;
+}
 int main(){
     struct node *root=createnode(25);
     insert(root,12);
@@ -82,5 +91,6 @@ int main(){
     postOrder(root);
     printf("\n");
     printf("Number of nodes is : %d\n",countNodes(root));
-    printf("Sum of nodes is : %d",sumOfNodes(root));
+    printf("Sum of nodes is : %d\n",sumOfNodes(root));
+    printf("Height of the tree : %d\n",height(root));
 }
