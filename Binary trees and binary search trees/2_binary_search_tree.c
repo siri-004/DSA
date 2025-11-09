@@ -46,6 +46,22 @@ struct node *insert(struct node *root,int value){
         root->left=insert(root->left,value);
     }
 }
+int countNodes(struct node *root){
+    if(root==NULL){
+        return 0;
+    }
+    int leftNodes=countNodes(root->left);
+    int rightNodes=countNodes(root->right);
+    return leftNodes+rightNodes+1;
+}
+int sumOfNodes(struct node *root){
+    if(root==NULL){
+        return 0;
+    }
+    int leftSum=sumOfNodes(root->left);
+    int rightSum=sumOfNodes(root->right);
+    return leftSum+rightSum+root->data;
+}
 int main(){
     struct node *root=createnode(25);
     insert(root,12);
@@ -65,4 +81,6 @@ int main(){
     printf("POST-ORDER(left,right,root):  ");
     postOrder(root);
     printf("\n");
+    printf("Number of nodes is : %d\n",countNodes(root));
+    printf("Sum of nodes is : %d",sumOfNodes(root));
 }
