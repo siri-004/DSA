@@ -46,6 +46,46 @@ struct node *insert(struct node *root,int value){
         root->left=insert(root->left,value);
     }
 }
+struct node *minimum(struct node *nn){
+    struct node *current=nn;
+    while(current&&current->left!=NULL){
+        current=current->left;
+    }
+    return current;
+}
+struct node *deleteNode(struct node *root,int element){
+    if(root==NULL){
+        return root;
+    }
+    else if(element<root->data){
+        root->left=deleteNode(root->left,element);
+    }
+    else if(element>root->data){
+        root->right=deleteNode(root->right,element);
+    }
+    else if(root->left==NULL&&root->right==NULL){
+        free(root);
+        root=NULL;
+        return root;
+    }
+    else if(root->left==NULL){
+        struct node *temp=root;
+        root=root->right;
+        free(temp);
+        return root;
+    }
+    else if(root->right==NULL){
+        struct node *temp=root;
+        root=root->left;
+        free(temp);
+        return root;
+    }
+    else{
+        struct node *temp=minimum(root->right);
+        root->data=temp->data;
+        root->right=deleteNode(root->right,temp->data);
+    }
+}
 int countNodes(struct node *root){
     if(root==NULL){
         return 0;
@@ -93,4 +133,9 @@ int main(){
     printf("Number of nodes is : %d\n",countNodes(root));
     printf("Sum of nodes is : %d\n",sumOfNodes(root));
     printf("Height of the tree : %d\n",height(root));
+    root=deleteNode(root,26);
+    printf("%d is deleted\n",26);
+    printf("IN-ORDER(left,root,right):  ");
+    inOrder(root);
+    printf("\n");
 }
